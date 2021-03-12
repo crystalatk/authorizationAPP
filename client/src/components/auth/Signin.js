@@ -1,53 +1,67 @@
-import React, {useState} from "react";
-import { Link, useHistory } from 'react-router-dom'
-import {useDispatch} from 'react-redux';
-import {signin} from '../../actions/index';
-
+import React, { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { signin } from "../../actions/index";
 
 const Signin = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
   const history = useHistory();
 
-  // Missing Stuff
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(
+      signin({ email, password }, () => {
+        history.push("/features");
+      })
+    );
+  };
 
-  return( 
-  <div className="mt-5">
-  
-    <div className="grid align__item">
+  return (
+    <div className="mt-5">
+      <div className="grid align__item">
+        <div className="register">
+          <img
+            height="100px"
+            src="https://avatars.githubusercontent.com/u/67744643?s=200&v=4"
+            alt=""
+          />
 
-      <div className="register">
+          <h2>Sign In</h2>
 
-        <img height="100px" src="https://avatars.githubusercontent.com/u/67744643?s=200&v=4" alt=""/>
-       
-
-        <h2>Sign In</h2>
-
-        <form onSubmit={handleSubmit} className="form">
-
+          <form onSubmit={handleSubmit} className="form">
             <div className="form__field">
-              <input type="email" onChange={e => setEmail(e.target.value)} value={email} placeholder="info@mailaddress.com" />
+              <input
+                type="email"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+                placeholder="info@mailaddress.com"
+              />
             </div>
 
             <div className="form__field">
-              <input type="password" onChange={e => setPassword(e.target.value)} value={password} placeholder="••••••••••••" />
+              <input
+                type="password"
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+                placeholder="••••••••••••"
+              />
             </div>
 
             <div className="form__field">
               <input type="submit" value="Log In" />
             </div>
+          </form>
 
-        </form>
-
-        <p>Don't have an account? <Link to="/signup">Register Here</Link></p>
-
+          <p>
+            Don't have an account? <Link to="/signup">Register Here</Link>
+          </p>
+        </div>
       </div>
-
     </div>
-  
-  </div>);
+  );
 };
 
 export default Signin;
